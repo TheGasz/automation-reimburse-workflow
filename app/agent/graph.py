@@ -71,7 +71,7 @@ def build_reimbursement_graph(
     checkpointer: BaseCheckpointSaver | None = None,
 ) -> Any:
     """Construct and compile the KlaimKilat AI StateGraph with checkpointer support."""
-    builder = StateGraph(ReimbursementAgentState)
+    builder: Any = StateGraph(ReimbursementAgentState)
 
     # Register nodes
     builder.add_node("ingest_and_dedup_node", ingest_and_dedup_node)
