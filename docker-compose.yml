@@ -1,0 +1,81 @@
+version: "3.9"
+
+services:
+  postgres-pgvector:
+    image: pgvector/pgvector:pg16
+    container_name: klaimkilat-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-klaimkilat}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-klaimkilat_secret}
+      POSTGRES_DB: ${POSTGRES_DB:-klaimkilat_db}
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgvector_data:/var/lib/postgresql/data
+      - ./app/db/migrations/001_init_schema.sql:/docker-entrypoint-initdb.d/001_init_schema.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U klaimkilat -d klaimkilat_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7.4-alpine
+    container_name: klaimkilat-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: klaimkilat-api
+    restart: unless-stopped
+    env_file:
+      - .env.example
+    environment:
+      DATABASE_URL: postgresql://klaimkilat:klaimkilat_secret@postgres-pgvector:5432/klaimkilat_db
+      REDIS_URL: redis://redis:6379/0
+      USE_IN_MEMORY_DB_FALLBACK: "false"
+      USE_LOCAL_QUEUE_FALLBACK: "false"
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres-pgvector:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: klaimkilat-worker
+    restart: unless-stopped
+    env_file:
+      - .env.example
+    environment:
+      DATABASE_URL: postgresql://klaimkilat:klaimkilat_secret@postgres-pgvector:5432/klaimkilat_db
+      REDIS_URL: redis://redis:6379/0
+      USE_IN_MEMORY_DB_FALLBACK: "false"
+      USE_LOCAL_QUEUE_FALLBACK: "false"
+    depends_on:
+      postgres-pgvector:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    command: ["python", "-m", "app.services.queue_worker"]
+
+volumes:
+  pgvector_data:
+  redis_data:

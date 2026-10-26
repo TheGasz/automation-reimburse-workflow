@@ -1,0 +1,135 @@
+[
+  {
+    "sample_id": "GR-001",
+    "preset_key": "indomaret_snack_rapat",
+    "title": "Indomaret — Air Mineral & Kopi Rapat Cabang (Auto-Approve <= 250rb)",
+    "employee_id": "EMP-001",
+    "caption": "Beli air mineral dus dan kopi untuk rapat mingguan cabang Surabaya",
+    "raw_ocr_text": "INDOMARET CABANG GUBENG SURABAYA\nTanggal: 2026-10-25\nNo: INV/IDM/20261025/091\n1x AQUA DUS 600ML         Rp 48.000\n2x KAPAL API SPECIAL MIX  Rp 32.000\n1x ROTI SARI ROTI TAWAR   Rp 18.000\nPPN Include               Rp      0\nTOTAL BAYAR               Rp 98.000",
+    "expected_extraction": {
+      "merchant_name": "Indomaret Cabang Gubeng Surabaya",
+      "receipt_date": "2026-10-25",
+      "receipt_number": "INV/IDM/20261025/091",
+      "category": "meals",
+      "items": [
+        {"item_name": "Aqua Dus 600ml", "quantity": 1, "unit_price": 48000, "subtotal": 48000, "is_restricted": false},
+        {"item_name": "Kapal Api Special Mix", "quantity": 2, "unit_price": 16000, "subtotal": 32000, "is_restricted": false},
+        {"item_name": "Roti Sari Roti Tawar", "quantity": 1, "unit_price": 18000, "subtotal": 18000, "is_restricted": false}
+      ],
+      "tax_and_service": 0,
+      "total_amount": 98000,
+      "ocr_confidence": 0.96
+    },
+    "expected_action": "auto_approve"
+  },
+  {
+    "sample_id": "GR-002",
+    "preset_key": "restoran_klien_high_value",
+    "title": "Restoran Bandar Djakarta — Jamuan Makan Klien > 250rb (Needs Human Review)",
+    "employee_id": "EMP-001",
+    "caption": "Jamuan makan malam klien PT Maju Jaya proyek pengadaan 50 unit laptop cabang Surabaya (4 orang)",
+    "raw_ocr_text": "BANDAR DJAKARTA SURABAYA\nTanggal: 2026-10-24\nNo: BDJ-88412\n1x Paket Gurame Bakar     Rp 185.000\n1x Kepiting Saus Padang   Rp 210.000\n4x Nasi Putih & Es Teh    Rp  80.000\nTax & Service 10%         Rp  47.500\nTOTAL                     Rp 522.500",
+    "expected_extraction": {
+      "merchant_name": "Bandar Djakarta Surabaya",
+      "receipt_date": "2026-10-24",
+      "receipt_number": "BDJ-88412",
+      "category": "meals",
+      "items": [
+        {"item_name": "Paket Gurame Bakar", "quantity": 1, "unit_price": 185000, "subtotal": 185000, "is_restricted": false},
+        {"item_name": "Kepiting Saus Padang", "quantity": 1, "unit_price": 210000, "subtotal": 210000, "is_restricted": false},
+        {"item_name": "Nasi Putih & Es Teh", "quantity": 4, "unit_price": 20000, "subtotal": 80000, "is_restricted": false}
+      ],
+      "tax_and_service": 47500,
+      "total_amount": 522500,
+      "ocr_confidence": 0.95
+    },
+    "expected_action": "needs_human_review"
+  },
+  {
+    "sample_id": "GR-003",
+    "preset_key": "minimarket_rokok_alkohol_reject",
+    "title": "Alfamart — Pembelian Rokok & Bir Bintang (Auto-Reject Hard Violation)",
+    "employee_id": "EMP-002",
+    "caption": "Konsumsi malam tim gudang",
+    "raw_ocr_text": "ALFAMART RAYA DARMO\nTanggal: 2026-10-25\nNo: ALF-99201\n2x SAMPOERNA A MILD 16    Rp 72.000\n2x BIR BINTANG KALENG     Rp 56.000\nTOTAL                     Rp 128.000",
+    "expected_extraction": {
+      "merchant_name": "Alfamart Raya Darmo",
+      "receipt_date": "2026-10-25",
+      "receipt_number": "ALF-99201",
+      "category": "meals",
+      "items": [
+        {"item_name": "Sampoerna A Mild 16", "quantity": 2, "unit_price": 36000, "subtotal": 72000, "is_restricted": true},
+        {"item_name": "Bir Bintang Kaleng", "quantity": 2, "unit_price": 28000, "subtotal": 56000, "is_restricted": true}
+      ],
+      "tax_and_service": 0,
+      "total_amount": 128000,
+      "ocr_confidence": 0.97
+    },
+    "expected_action": "auto_reject"
+  },
+  {
+    "sample_id": "GR-004",
+    "preset_key": "struk_gabungan_atk_dan_rokok",
+    "title": "Indomaret — Struk Gabungan ATK Lakban + Rokok Pribadi (Partial / Human Review)",
+    "employee_id": "EMP-002",
+    "caption": "Beli lakban packing gudang dan kertas thermal kasir",
+    "raw_ocr_text": "INDOMARET DIPONEGORO\nTanggal: 2026-10-25\nNo: IDM-55210\n3x LAKBAN COKLAT DAIMARU  Rp 45.000\n5x KERTAS THERMAL 80MM    Rp 75.000\n1x ROKOK SURYA PRO 16     Rp 35.000\nTOTAL                     Rp 155.000",
+    "expected_extraction": {
+      "merchant_name": "Indomaret Diponegoro",
+      "receipt_date": "2026-10-25",
+      "receipt_number": "IDM-55210",
+      "category": "office_supplies",
+      "items": [
+        {"item_name": "Lakban Coklat Daimaru", "quantity": 3, "unit_price": 15000, "subtotal": 45000, "is_restricted": false},
+        {"item_name": "Kertas Thermal 80mm", "quantity": 5, "unit_price": 15000, "subtotal": 75000, "is_restricted": false},
+        {"item_name": "Rokok Surya Pro 16", "quantity": 1, "unit_price": 35000, "subtotal": 35000, "is_restricted": true}
+      ],
+      "tax_and_service": 0,
+      "total_amount": 155000,
+      "ocr_confidence": 0.94
+    },
+    "expected_action": "needs_human_review"
+  },
+  {
+    "sample_id": "GR-005",
+    "preset_key": "etoll_dan_bbm_dinas",
+    "title": "SPBU Pertamina & E-Toll — BBM Dinas Pengiriman Cabang Malang (Auto-Approve)",
+    "employee_id": "EMP-002",
+    "caption": "Isi BBM Pertamax mobil box operasional pengiriman barang ke cabang Malang",
+    "raw_ocr_text": "SPBU PERTAMINA 54.601.99\nTanggal: 2026-10-25\nNo: SPBU-4421\n1x PERTAMAX 15 LITER      Rp 195.000\nTOTAL                     Rp 195.000",
+    "expected_extraction": {
+      "merchant_name": "SPBU Pertamina 54.601.99",
+      "receipt_date": "2026-10-25",
+      "receipt_number": "SPBU-4421",
+      "category": "transport",
+      "items": [
+        {"item_name": "Pertamax 15 Liter", "quantity": 1, "unit_price": 195000, "subtotal": 195000, "is_restricted": false}
+      ],
+      "tax_and_service": 0,
+      "total_amount": 195000,
+      "ocr_confidence": 0.96
+    },
+    "expected_action": "auto_approve"
+  },
+  {
+    "sample_id": "GR-006",
+    "preset_key": "nota_expired_lewat_14_hari",
+    "title": "Nota Kedaluwarsa (> 14 Hari Kalender) — Auto-Reject SOP-FIN-01.1",
+    "employee_id": "EMP-003",
+    "caption": "Reimburse taksi kunjungan vendor bulan lalu",
+    "raw_ocr_text": "BLUEBIRD TAXI SURABAYA\nTanggal: 2026-09-15\nNo: BB-10291\n1x Argo Taksi Bandara     Rp 145.000\nTOTAL                     Rp 145.000",
+    "expected_extraction": {
+      "merchant_name": "Bluebird Taxi Surabaya",
+      "receipt_date": "2026-09-15",
+      "receipt_number": "BB-10291",
+      "category": "transport",
+      "items": [
+        {"item_name": "Argo Taksi Bandara", "quantity": 1, "unit_price": 145000, "subtotal": 145000, "is_restricted": false}
+      ],
+      "tax_and_service": 0,
+      "total_amount": 145000,
+      "ocr_confidence": 0.95
+    },
+    "expected_action": "auto_reject"
+  }
+]
