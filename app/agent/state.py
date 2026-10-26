@@ -1,6 +1,6 @@
 """State schema and Pydantic v2 validation models for KlaimKilat AI."""
 
-from typing import Literal, Optional
+from typing import Literal
 
 from pydantic import BaseModel, Field
 from typing_extensions import TypedDict
@@ -24,7 +24,7 @@ class ExtractedReceipt(BaseModel):
 
     merchant_name: str
     receipt_date: str = Field(description="Format YYYY-MM-DD")
-    receipt_number: Optional[str] = None
+    receipt_number: str | None = None
     category: Literal[
         "meals",
         "transport",
@@ -74,14 +74,14 @@ class ReimbursementAgentState(TypedDict, total=False):
     chat_id: str
     image_url_or_path: str
     user_caption: str
-    raw_ocr_text: Optional[str]
-    receipt_hash: Optional[str]
+    raw_ocr_text: str | None
+    receipt_hash: str | None
     is_duplicate: bool
-    extracted_receipt: Optional[dict]        # Serialized ExtractedReceipt
+    extracted_receipt: dict | None        # Serialized ExtractedReceipt
     retrieved_policies: list[dict]           # Hasil Hybrid Search pgvector
-    employee_remaining_quota: Optional[int]  # Hasil Tool Calling database
-    audit_decision: Optional[dict]           # Serialized AuditDecision
-    human_review_decision: Optional[dict]    # Output dari interrupt() / Command(resume=...)
+    employee_remaining_quota: int | None  # Hasil Tool Calling database
+    audit_decision: dict | None           # Serialized AuditDecision
+    human_review_decision: dict | None    # Output dari interrupt() / Command(resume=...)
     final_status: Literal[
         "PENDING",
         "APPROVED",

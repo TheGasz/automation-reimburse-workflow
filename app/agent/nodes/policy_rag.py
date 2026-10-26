@@ -316,7 +316,7 @@ def compute_semantic_embedding(text: str, dim: int = 1024) -> list[float]:
 
 def cosine_similarity(vec_a: list[float], vec_b: list[float]) -> float:
     """Compute cosine similarity between two normalized vectors."""
-    return sum(a * b for a, b in zip(vec_a, vec_b))
+    return sum(a * b for a, b in zip(vec_a, vec_b, strict=False))
 
 
 def tokenize_indonesian_fts(text: str) -> list[str]:
