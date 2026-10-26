@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import json
 import logging
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from typing import Any
 
 import asyncpg
@@ -224,7 +224,7 @@ class DatabaseManager:
         if receipt_hash and not state.get("is_duplicate", False):
             self.register_receipt_hash(receipt_hash, claim_id)
 
-        now_iso = datetime.now(timezone.utc).isoformat()
+        now_iso = datetime.now(UTC).isoformat()
         existing = self._claims.get(claim_id, {})
 
         record: dict[str, Any] = {
@@ -354,7 +354,7 @@ class DatabaseManager:
             "cost_idr": round(cost_idr, 4),
             "status": status,
             "error_message": error_message,
-            "created_at": datetime.now(timezone.utc).isoformat(),
+            "created_at": datetime.now(UTC).isoformat(),
         }
         self._telemetry.append(entry)
 
