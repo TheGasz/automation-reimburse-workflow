@@ -1,0 +1,7 @@
+{
+  "dependencies": ["."],
+  "graphs": {
+    "klaimkilat_reimbursement_agent": "./app/agent/graph.py:reimbursement_graph"
+  },
+  "env": ".env"
+}
